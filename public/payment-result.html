@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Результат оплаты - Здоровая лапка</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: system-ui, sans-serif; background: #f5faff; padding: 40px 20px; }
+        .container { max-width: 600px; margin: 0 auto; }
+        .card { background: white; border-radius: 24px; padding: 40px; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+        .spinner { display: inline-block; width: 50px; height: 50px; border: 4px solid #e6f2fa; border-top-color: #0a6c9e; border-radius: 50%; animation: spin 1s linear infinite; margin: 20px 0; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .success { color: #2a7f6e; }
+        .error { color: #d9534f; }
+        .btn { display: inline-block; background: #0a6c9e; color: white; padding: 12px 24px; border-radius: 40px; text-decoration: none; margin-top: 20px; }
+        .btn:hover { background: #054a6e; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card" id="resultCard">
+            <div class="spinner"></div>
+            <h2>Проверка статуса платежа...</h2>
+            <p>Пожалуйста, подождите</p>
+        </div>
+    </div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const paymentId = urlParams.get('payment_id');
+        
+        async function checkPaymentStatus() {
+            if (!paymentId) { 
+                showResult(false, 'Не удалось определить информацию о платеже'); 
+                return; 
+            }
+            try {
+                const response = await fetch(`/api/order-status/${paymentId}`);
+                const data = await response.json();
+                if (data.status === 'succeeded' || data.paid === true) { 
+                    showResult(true, data); 
+                } else if (data.status === 'pending' || data.status === 'waiting_for_capture') { 
+                    setTimeout(checkPaymentStatus, 3000); 
+                } else { 
+                    showResult(false, data); 
+                }
+            } catch (error) { 
+                showResult(false, { error: error.message }); 
+            }
+        }
+        
+        function showResult(isSuccess, data) {
+            const card = document.getElementById('resultCard');
+            if (isSuccess) {
+                card.innerHTML = `
+                    <div style="font-size:80px;">✅</div>
+                    <h2 class="success">Оплата прошла успешно!</h2>
+                    <p>Спасибо за доверие к нашей клинике.</p>
+                    <p>Мы свяжемся с вами в ближайшее время.</p>
+                    <a href="http://localhost:3000/" class="btn">🏠 Вернуться на главную</a>
+                `;
+            } 
+        }
+        
+        checkPaymentStatus();
+    </script>
+</body>
+</html>

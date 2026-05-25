@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Здоровая Лапка | Ветеринарная клиника в Москве — Полный список услуг и онлайн-оплата</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; background: #fefefe; color: #1A2C3E; scroll-behavior: smooth; }
+        :root { --primary: #1E88E5; --primary-dark: #0B5A9E; --primary-light: #E1F0FA; --success: #10b981; --success-dark: #059669; --gray-50: #F9FAFB; --gray-100: #F3F4F6; --gray-200: #E5E7EB; --gray-600: #4B5563; --gray-800: #1F2937; --shadow-sm: 0 4px 12px rgba(0,0,0,0.03), 0 1px 2px rgba(0,0,0,0.05); --radius-xl: 28px; --radius-lg: 20px; --radius-md: 16px; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+        .navbar { background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); box-shadow: var(--shadow-sm); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--gray-200); }
+        .nav-flex { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; flex-wrap: wrap; gap: 16px; }
+        .logo { font-size: 1.6rem; font-weight: 700; background: linear-gradient(135deg, var(--primary) 0%, #0D47A1 100%); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: -0.3px; }
+        .nav-links { display: flex; gap: 28px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--gray-800); font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--primary); }
+        .btn { display: inline-flex; align-items: center; gap: 8px; background: var(--primary); color: white; padding: 12px 28px; border-radius: 40px; font-weight: 600; text-decoration: none; transition: all 0.2s ease; border: none; cursor: pointer; font-size: 0.95rem; }
+        .btn:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 6px 14px rgba(30,136,229,0.25); }
+        .btn-outline { background: transparent; border: 1.5px solid var(--primary); color: var(--primary); }
+        .btn-outline:hover { background: var(--primary-light); transform: none; box-shadow: none; }
+        .btn-success { background: var(--success); box-shadow: 0 4px 12px rgba(16,185,129,0.2); }
+        .btn-success:hover { background: var(--success-dark); }
+        .hero { background: linear-gradient(120deg, #EFF6FF 0%, #FFFFFF 80%); padding: 70px 0 60px; text-align: center; border-bottom: 1px solid var(--gray-200); }
+        .hero h1 { font-size: 3.2rem; font-weight: 800; background: linear-gradient(135deg, #0D47A1, #1E88E5); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 16px; }
+        .hero p { font-size: 1.2rem; color: var(--gray-600); max-width: 620px; margin: 0 auto 24px; }
+        section { padding: 60px 0; }
+        .section-title { font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 40px; color: #0F2B3D; }
+        .section-title:after { content: ''; display: block; width: 70px; height: 4px; background: var(--primary); margin: 12px auto 0; border-radius: 4px; }
+        
+        /* 服务分类卡片 - 完整表格化列表 */
+        .service-category { background: white; border-radius: var(--radius-lg); margin-bottom: 28px; box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200); overflow: hidden; }
+        .category-header { background: var(--gray-50); padding: 18px 24px; border-bottom: 1px solid var(--gray-200); cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 1.3rem; color: var(--primary-dark); user-select: none; }
+        .category-header h3 { font-size: 1.3rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        .toggle-icon { font-size: 1.4rem; transition: transform 0.2s; }
+        .service-list { padding: 0; max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
+        .service-list.open { max-height: 2000px; overflow-y: auto; }
+        .service-item { display: flex; justify-content: space-between; align-items: baseline; padding: 12px 24px; border-bottom: 1px solid var(--gray-100); flex-wrap: wrap; gap: 12px; transition: background 0.1s; }
+        .service-item:hover { background: var(--gray-50); }
+        .service-name { font-weight: 500; color: #1e2a3e; flex: 2; min-width: 200px; }
+        .service-unit { color: var(--gray-600); font-size: 0.85rem; min-width: 110px; }
+        .service-price { font-weight: 700; color: var(--primary-dark); font-size: 1.05rem; }
+        .download-area { background: var(--primary-light); border-radius: var(--radius-lg); padding: 40px 28px; text-align: center; margin-top: 20px; }
+        .info-grid { display: flex; gap: 28px; flex-wrap: wrap; justify-content: center; }
+        .info-card { background: white; border-radius: 24px; padding: 24px; text-align: center; flex: 1; border: 1px solid var(--gray-200); box-shadow: var(--shadow-sm); }
+        .info-card .emoji { font-size: 2.5rem; margin-bottom: 12px; }
+        .footer { background: #0B1622; color: #94a3b8; padding: 40px 0; text-align: center; font-size: 0.9rem; }
+        
+        /* 弹窗优化 */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 1000; justify-content: center; align-items: center; }
+        .modal.active { display: flex; }
+        .modal-content { background: white; border-radius: var(--radius-xl); max-width: 520px; width: 90%; padding: 32px; box-shadow: 0 30px 50px rgba(0,0,0,0.2); animation: slideUp 0.25s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { font-weight: 600; display: block; margin-bottom: 6px; color: #2c3e4e; }
+        .form-group input, .form-group select { width: 100%; padding: 12px 16px; border: 1.5px solid var(--gray-200); border-radius: var(--radius-md); font-size: 1rem; transition: 0.2s; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(30,136,229,0.1); }
+        .price { font-size: 2rem; font-weight: 800; color: var(--success); margin: 12px 0 16px; text-align: center; }
+        .test-card-info { background: var(--gray-100); padding: 14px; border-radius: var(--radius-md); font-size: 0.8rem; font-family: monospace; margin: 20px 0; border-left: 4px solid var(--primary); }
+        .status-msg { padding: 12px; border-radius: var(--radius-md); margin: 12px 0; display: none; }
+        .status-msg.success { background: #d1fae5; color: #065f46; display: block; }
+        .status-msg.error { background: #fee2e2; color: #b91c1c; display: block; }
+        .status-msg.info { background: var(--primary-light); color: #07519a; display: block; }
+        .modal-buttons { display: flex; gap: 12px; margin-top: 20px; }
+        @media (max-width: 760px) { .container { padding: 0 16px; } .hero h1 { font-size: 2.2rem; } .service-item { flex-direction: column; align-items: flex-start; } .service-unit { margin-left: 0; } }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="container nav-flex">
+        <div class="logo">🐾 Здоровая Лапка</div>
+        <div class="nav-links">
+            <a href="#about">О нас</a>
+            <a href="#services">Услуги</a>
+            <a href="#contact">Контакты</a>
+        </div>
+    </div>
+</div>
+
+<section class="hero">
+    <div class="container">
+        <h1>Забота, проверенная временем</h1>
+        <p>Полный спектр ветеринарной диагностики, терапии и хирургии. Любим ваших питомцев как своих.</p>
+        <div class="btn-group" style="gap: 16px; margin-top: 8px;">
+            <button class="btn btn-success" id="openPayBtn">💳 Онлайн-запись и оплата</button>
+            <a href="#services" class="btn btn-outline">📋 Полный прайс-лист</a>
+        </div>
+        <p style="margin-top: 20px; font-size: 0.8rem;">🔐 Безопасная оплата картами Visa/MasterCard | Тестовый режим</p>
+    </div>
+</section>
+
+<!-- 支付弹窗 -->
+<div class="modal" id="payModal">
+    <div class="modal-content">
+        <h3 style="font-size: 1.6rem; margin-bottom: 12px;">🏥 Запись на приём</h3>
+        <div class="form-group">
+            <label>📋 Выберите услугу</label>
+            <select id="serviceSelect">
+                <option value="3150">Первичный приём терапевта — 3 150 ₽</option>
+                <option value="4500">Вакцинация импортной вакциной — 4 500 ₽</option>
+                <option value="1700">Рентген (1 проекция) — 1 700 ₽</option>
+                <option value="2000">Общий клинический анализ крови — 2 000 ₽</option>
+                <option value="11000">Кастрация кошки (пакет 1 степени) — 11 000 ₽</option>
+                <option value="2950">Рентген брюшной полости (2 снимка) — 2 950 ₽</option>
+                <option value="3850">ЭХО-кардиограмма — 3 850 ₽</option>
+                <option value="2300">Вирусный иммунодефицит/лейкемия кошек (ИФА) — 2 300 ₽</option>
+                <option value="4200">Рентген грудной клетки (3 проекции) — 4 200 ₽</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>🐾 Имя питомца</label>
+            <input type="text" id="petName" placeholder="Например: Барсик, Buddy" value="Мурка">
+        </div>
+        <div class="form-group">
+            <label>👤 Ваше имя</label>
+            <input type="text" id="userName" placeholder="Для связи" value="Анна">
+        </div>
+        <div class="price" id="priceDisplay">₽ 3 150</div>
+        <div class="test-card-info">
+            🧪 <strong>Тестовые данные YooKassa (песочница)</strong><br>
+            Номер карты: <code>5555 5555 5555 4477</code> | Срок: <code>12/30</code> | CVV: <code>123</code><br>
+            После нажатия вы перейдёте на тестовую страницу оплаты.
+        </div>
+        <div id="paymentStatus" class="status-msg"></div>
+        <div class="modal-buttons">
+            <button class="btn btn-success" id="confirmPayBtn" style="flex:1;">💳 Оплатить</button>
+            <button class="btn btn-outline" id="closeModalBtn" style="flex:0.5;">Отмена</button>
+        </div>
+    </div>
+</div>
+
+<!-- 完整服务列表 - 基于XLSX数据整合, 全部转为详细条目 -->
+<section id="services">
+    <div class="container">
+        <div class="section-title">🏷️ Все услуги и цены (более 200+ позиций)</div>
+        
+        <!-- 诊断影像 -->
+        <div class="service-category">
+            <div class="category-header"><h3><span>🩻</span> Рентген & УЗИ диагностика</h3><span class="toggle-icon">▼</span></div>
+            <div class="service-list">
+                <div class="service-item"><span class="service-name">Рентгенографическое исследование в 1 проекции</span><span class="service-unit">1 снимок</span><span class="service-price">1 700 ₽</span></div>
+                <div class="service-item"><span class="service-name">Рентгенографическое исследование в 2 проекциях</span><span class="service-unit">2 снимка</span><span class="service-price">2 950 ₽</span></div>
+                <div class="service-item"><span class="service-name">Рентгенографическое исследование в 3 проекциях</span><span class="service-unit">3 снимка</span><span class="service-price">4 200 ₽</span></div>
+                <div class="service-item"><span class="service-name">Рентген брюшной полости</span><span class="service-unit">2 снимка</span><span class="service-price">2 950 ₽</span></div>
+                <div class="service-item"><span class="service-name">Рентген грудной клетки</span><span class="service-unit">3 снимка</span><span class="service-price">4 200 ₽</span></div>
+                <div class="service-item"><span class="service-name">Рентген черепа</span><span class="service-unit">3 снимка</span><span class="service-price">3 800 ₽</span></div>
+                <div class="service-item"><span class="service-name">Рентген мелких птиц/грызунов (1 проекция)</span><span class="service-unit">1 снимок</span><span class="service-price">1 600 ₽</span></div>
+                <div class="service-item"><span class="service-name">УЗИ брюшной полости детализированное</span><span class="service-unit">1 исслед.</span><span class="service-price">4 500 ₽</span></div>
+                <div class="service-item"><span class="service-name">УЗИ грудной полости</span><span class="service-unit">1 исслед.</span><span class="service-price">1 900 ₽</span></div>
+                <div class="service-item"><span class="service-name">ЭХО-кардиограмма</span><span class="service-unit">1 исслед.</span><span class="service-price">3 850 ₽</span></div>
+                <div class="service-item"><span class="service-name">Электрокардиограмма</span><span class="service-unit">1 исслед.</span><span class="service-price">1 550 ₽</span></div>
+                <div class="service-item"><span class="service-name">Холтеровское мониторирование (расшифровка)</span><span class="service-unit">1 исслед.</span><span class="service-price">6 750 ₽</span></div>
+                <div class="service-item"><span class="service-name">Снимок на дентальном визиографе</span><span class="service-unit">1 снимок</span><span class="service-price">650 ₽</span></div>
+            </div>
+        </div>
+        
+        <!-- Лабораторная диагностика -->
+        <div class="service-category">
+            <div class="category-header"><h3><span>🧪</span> Лабораторная диагностика</h3><span class="toggle-icon">▼</span></div>
+            <div class="service-list">
+                <div class="service-item"><span class="service-name">Общий клинический анализ крови</span><span class="service-unit">кровь с ЭДТА</span><span class="service-price">2 000 ₽</span></div>
+                <div class="service-item"><span class="service-name">Общий клинический анализ крови + гемопаразиты</span><span class="service-unit">комплекс</span><span class="service-price">2 300 ₽</span></div>
+                <div class="service-item"><span class="service-name">Биохимия крови (1 показатель: глюкоза, белок и др.)</span><span class="service-unit">1 показ.</span><span class="service-price">210 ₽</span></div>
+                <div class="service-item"><span class="service-name">Коагулограмма</span><span class="service-unit">плазма</span><span class="service-price">2 500 ₽</span></div>
+                <div class="service-item"><span class="service-name">Общий клинический анализ мочи</span><span class="service-unit">моча</span><span class="service-price">780 ₽</span></div>
+                <div class="service-item"><span class="service-name">С-реактивный белок (собаки)</span><span class="service-unit">сыворотка</span><span class="service-price">2 400 ₽</span></div>
+                <div class="service-item"><span class="service-name">Сывороточный амилоид А (кошки)</span><span class="service-unit">сыворотка</span><span class="service-price">2 400 ₽</span></div>
+                <div class="service-item"><span class="service-name">Вирусный иммунодефицит кошек (ИФА)</span><span class="service-unit">сыворотка</span><span class="service-price">2 300 ₽</span></div>
+                <div class="service-item"><span class="service-name">Вирусная лейкемия кошек (ИФА)</span><span class="service-unit">сыворотка</span><span class="service-price">2 300 ₽</span></div>
+                <div class="service-item"><span class="service-name">Копрологические исследования на гельминты</span><span class="service-unit">фекалии</span><span class="service-price">760 ₽</span></div>
+                <div class="service-item"><span class="service-name">Исследование на дерматофиты (микроскопия)</span><span class="service-unit">шерсть</span><span class="service-price">630 ₽</span></div>
+                <div class="service-item"><span class="service-name">Гистологическое заключение (до 6 блоков)</span><span class="service-unit">биоматериал</span><span class="service-price">4 700 ₽</span></div>
+            </div>
+        </div>
+
+        <!-- Приёмы и терапия -->
+        <div class="service-category">
+            <div class="category-header"><h3><span>🩺</span> Приёмы специалистов & Терапия</h3><span class="toggle-icon">▼</span></div>
+            <div class="service-list">
+                <div class="service-item"><span class="service-name">Первичный приём терапевта</span><span class="service-unit">1 голова</span><span class="service-price">3 150 ₽</span></div>
+                <div class="service-item"><span class="service-name">Повторный приём терапевта</span><span class="service-unit">1 голова</span><span class="service-price">3 150 ₽</span></div>
+                <div class="service-item"><span class="service-name">Первичный приём кардиолога</span><span class="service-unit">1 голова</span><span class="service-price">3 700 ₽</span></div>
+                <div class="service-item"><span class="service-name">Первичный приём офтальмолога (офтальмоскопия, ВГД, флюоресцеин)</span><span class="service-unit">1 голова</span><span class="service-price">3 700 ₽</span></div>
+                <div class="service-item"><span class="service-name">Первичный приём онколога</span><span class="service-unit">1 голова</span><span class="service-price">3 700 ₽</span></div>
+                <div class="service-item"><span class="service-name">Первичный приём дерматолога</span><span class="service-unit">1 голова</span><span class="service-price">3 700 ₽</span></div>
+                <div class="service-item"><span class="service-name">Вакцинация импортной вакциной (с препаратом)</span><span class="service-unit">1 вакцинация</span><span class="service-price">4 500 ₽</span></div>
+                <div class="service-item"><span class="service-name">Вакцинация против пироплазмоза</span><span class="service-unit">1 вакцинация</span><span class="service-price">3 550 ₽</span></div>
+                <div class="service-item"><span class="service-name">Электронное чипирование + регистрация Animal-id</span><span class="service-unit">1 голова</span><span class="service-price">2 450 ₽</span></div>
+                <div class="service-item"><span class="service-name">Внутривенная инъекция (со шприцем)</span><span class="service-unit">инъекция</span><span class="service-price">325 ₽</span></div>
+                <div class="service-item"><span class="service-name">Капельное введение препаратов</span><span class="service-unit">процед.</span><span class="service-price">2 100 ₽</span></div>
+                <div class="service-item"><span class="service-name">Тонометрия (измерение давления)</span><span class="service-unit">1 процед.</span><span class="service-price">630 ₽</span></div>
+            </div>
+        </div>
+
+        <!-- Хирургия и стоматология -->
+        <div class="service-category">
+            <div class="category-header"><h3><span>⚕️</span> Хирургия & Стоматология</h3><span class="toggle-icon">▼</span></div>
+            <div class="service-list">
+                <div class="service-item"><span class="service-name">Кастрация кота/кошки (риск 1 степени, операция+анестезия+реабилитация)</span><span class="service-unit">пакет</span><span class="service-price">11 000 ₽</span></div>
+                <div class="service-item"><span class="service-name">Кастрация кобеля (риск 1 степени, полный пакет)</span><span class="service-unit">1 голова</span><span class="service-price">13 000 ₽</span></div>
+                <div class="service-item"><span class="service-name">Остеосинтез при простых переломах предплечья/голени (кошки/собаки до 10кг)</span><span class="service-unit">операция</span><span class="service-price">21 000 ₽</span></div>
+                <div class="service-item"><span class="service-name">Ампутация пальца у кошек/собак</span><span class="service-unit">операция</span><span class="service-price">14 000 ₽</span></div>
+                <div class="service-item"><span class="service-name">Удаление зубного камня ультразвуком (1 зуб, 1-2 степень)</span><span class="service-unit">1 зуб</span><span class="service-price">180 ₽</span></div>
+                <div class="service-item"><span class="service-name">Эндодонтическое лечение клыка (кошка)</span><span class="service-unit">1 зуб</span><span class="service-price">6 000 ₽</span></div>
+                <div class="service-item"><span class="service-name">Резекция новообразований кожи (2-4 см, без инвазии)</span><span class="service-unit">операция</span><span class="service-price">6 200 ₽</span></div>
+                <div class="service-item"><span class="service-name">Цистотомия (кошки и собаки до 10 кг)</span><span class="service-unit">операция</span><span class="service-price">18 500 ₽</span></div>
+                <div class="service-item"><span class="service-name">Хирургическое лечение вывиха коленной чашки (до 10кг)</span><span class="service-unit">операция</span><span class="service-price">15 400 ₽</span></div>
+                <div class="service-item"><span class="service-name">Субтотальная мастэктомия у кошек/собак до 10 кг</span><span class="service-unit">операция</span><span class="service-price">27 750 ₽</span></div>
+            </div>
+        </div>
+
+        <!-- Экзотические животные, орнитология -->
+        <div class="service-category">
+            <div class="category-header"><h3><span>🦜</span> Экзотические животные & Птицы</h3><span class="toggle-icon">▼</span></div>
+            <div class="service-list">
+                <div class="service-item"><span class="service-name">Первичный приём орнитолога (мелкие попугаи до 150гр)</span><span class="service-unit">1 голова</span><span class="service-price">3 700 ₽</span></div>
+                <div class="service-item"><span class="service-name">Первичный приём орнитолога (крупные попугаи: ара, жако)</span><span class="service-unit">1 голова</span><span class="service-price">5 250 ₽</span></div>
+                <div class="service-item"><span class="service-name">Рентген птиц (1 проекция)</span><span class="service-unit">снимок</span><span class="service-price">1 600 ₽</span></div>
+                <div class="service-item"><span class="service-name">Кастрация кролика (самцы)</span><span class="service-unit">операция</span><span class="service-price">4 200 ₽</span></div>
+                <div class="service-item"><span class="service-name">Одонтопластика у грызунов/кроликов 1 кат.</span><span class="service-unit">процед.</span><span class="service-price">700 ₽</span></div>
+                <div class="service-item"><span class="service-name">Исследование помёта на криптоспоридии (микроскопия)</span><span class="service-unit">исслед.</span><span class="service-price">1 050 ₽</span></div>
+                <div class="service-item"><span class="service-name">Удаление яйца при дистоции у птиц (с анестезией)</span><span class="service-unit">процед.</span><span class="service-price">8 450 ₽</span></div>
+            </div>
+        </div>
+
+        <div class="download-area">
+            <h3>📋 Полный прейскурант (оригинальные данные из service-full.xlsx)</h3>
+            <p>Рентген, УЗИ, биохимия, ПЦР-профили, гистология, ортопедия, эндоскопия — все услуги с ценами.</p>
+            <a href="#" class="btn" id="fakeDownloadBtn" style="background: #1E88E5;">📥 Скачать полный прайс (Excel / PDF)</a>
+            <p style="margin-top: 12px; font-size: 0.75rem;">*актуальные цены из базы клиники: диагностика, лаборатория, стационар, операции</p>
+        </div>
+    </div>
+</section>
+
+<section id="about">
+    <div class="container">
+        <div class="section-title">О клинике</div>
+        <div class="info-grid">
+            <div class="info-card"><div class="emoji">📍</div><h3>Адрес</h3><p>Москва, ул. Маршала Жукова, 35</p></div>
+            <div class="info-card"><div class="emoji">📞</div><h3>Телефон</h3><p><a href="tel:+74993421256">+7 499 342-12-56</a></p></div>
+            <div class="info-card"><div class="emoji">✉️</div><h3>Email</h3><p><a href="mailto:clinic@zdorovaya-lapka.ru">clinic@zdorovaya-lapka.ru</a></p></div>
+        </div>
+    </div>
+</section>
+
+<div class="footer">
+    <div class="container">
+        <p>🐾 Здоровая Лапка — ветеринарная клиника с заботой о каждом питомце</p>
+        <p>© 2026 Все права защищены. Лицензия на осуществление ветеринарной деятельности.</p>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.category-header').forEach(header => {
+        const listDiv = header.nextElementSibling;
+        const icon = header.querySelector('.toggle-icon');
+        if (listDiv && listDiv.classList.contains('service-list')) {
+            listDiv.classList.add('open');
+            icon.style.transform = 'rotate(0deg)';
+            header.addEventListener('click', (e) => {
+                e.stopPropagation();
+                listDiv.classList.toggle('open');
+                icon.style.transform = listDiv.classList.contains('open') ? 'rotate(0deg)' : 'rotate(-90deg)';
+            });
+        }
+    });
+    
+    // API 基础地址
+    const API_BASE = window.location.origin;
+    
+    // DOM 元素
+    const modal = document.getElementById('payModal');
+    const openBtn = document.getElementById('openPayBtn');
+    const closeBtn = document.getElementById('closeModalBtn');
+    const confirmBtn = document.getElementById('confirmPayBtn');
+    const statusDiv = document.getElementById('paymentStatus');
+    const serviceSelect = document.getElementById('serviceSelect');
+    const priceDisplay = document.getElementById('priceDisplay');
+    const petNameInput = document.getElementById('petName');
+    const userNameInput = document.getElementById('userName');
+    
+    // 更新价格显示
+    serviceSelect.addEventListener('change', () => {
+        const price = parseInt(serviceSelect.value);
+        priceDisplay.textContent = `₽ ${price.toLocaleString()}`;
+    });
+    
+    // 打开弹窗
+    openBtn.addEventListener('click', () => {
+        statusDiv.className = 'status-msg';
+        statusDiv.style.display = 'none';
+        modal.classList.add('active');
+    });
+    
+    // 关闭弹窗
+    closeBtn.addEventListener('click', () => {
+        modal.classList.remove('active');
+    });
+    
+    // 主动查询支付状态（轮询）
+    async function pollPaymentStatus(paymentId, maxAttempts = 10, interval = 2000) {
+        for (let i = 0; i < maxAttempts; i++) {
+            console.log(`[Активный запрос] ${i + 1} раз, платеж ${paymentId}`);
+            try {
+                const response = await fetch(`${API_BASE}/api/payment-status/${paymentId}`);
+                const data = await response.json();
+                if (data.success) {
+                    if (data.status === 'succeeded') {
+                        return { success: true, status: 'succeeded', data };
+                    } else if (data.status === 'canceled') {
+                        return { success: false, status: 'canceled', data };
+                    }
+                }
+            } catch (err) {
+                console.error('[Ошибка запроса]', err);
+            }
+            await new Promise(resolve => setTimeout(resolve, interval));
+        }
+        return { success: false, status: 'timeout' };
+    }
+    
+    // 确认支付
+    confirmBtn.addEventListener('click', async () => {
+        const amount = parseInt(serviceSelect.value);
+        const petName = petNameInput.value.trim() || 'Без имени';
+        const userName = userNameInput.value.trim() || 'Аноним';
+        const serviceName = serviceSelect.options[serviceSelect.selectedIndex]?.text || 'Услуга';
+        
+        if (!petName) {
+            showStatus('Пожалуйста, укажите имя питомца', 'error');
+            return;
+        }
+        
+        showStatus('Создание заказа...', 'info');
+        confirmBtn.disabled = true;
+        confirmBtn.style.opacity = '0.6';
+        
+        try {
+            const createResponse = await fetch(`${API_BASE}/api/create-payment`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    amount: amount,
+                    description: `Запись в клинику - ${serviceName} - Питомец: ${petName}`,
+                    userId: userName,
+                    petName: petName,
+                    serviceName: serviceName,
+                    returnUrl: `${API_BASE}/success`
+                })
+            });
+            
+            const createData = await createResponse.json();
+            if (!createData.success) {
+                throw new Error(createData.error || 'Ошибка создания платежа');
+            }
+            
+            sessionStorage.setItem('currentPaymentId', createData.paymentId);
+            sessionStorage.setItem('currentOrderId', createData.orderId);
+            window.location.href = createData.confirmationUrl;
+            
+        } catch (error) {
+            console.error('[Ошибка оплаты]', error);
+            showStatus(error.message || 'Ошибка, попробуйте позже', 'error');
+            confirmBtn.disabled = false;
+            confirmBtn.style.opacity = '1';
+        }
+    });
+    
+    function showStatus(message, type) {
+        statusDiv.className = `status-msg ${type}`;
+        statusDiv.innerText = message;
+        statusDiv.style.display = 'block';
+    }
+    
+    async function checkPendingPayment() {
+        const paymentId = sessionStorage.getItem('currentPaymentId');
+        if (paymentId) {
+            showStatus('Проверка статуса оплаты...', 'info');
+            const result = await pollPaymentStatus(paymentId, 15, 2000);
+            if (result.success && result.status === 'succeeded') {
+                showStatus('✅ Оплата прошла успешно! Ваша запись подтверждена.', 'success');
+                sessionStorage.removeItem('currentPaymentId');
+                sessionStorage.removeItem('currentOrderId');
+                setTimeout(() => alert('🎉 Спасибо! Мы свяжемся с вами для подтверждения времени приёма.'), 500);
+            } else if (result.status === 'canceled') {
+                showStatus('❌ Оплата отменена. Вы можете повторить запись.', 'error');
+                sessionStorage.removeItem('currentPaymentId');
+            } else {
+                showStatus('⏳ Оплата в обработке, проверьте email позже.', 'info');
+            }
+        }
+    }
+    
+    checkPendingPayment();
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
+    
+    document.getElementById('fakeDownloadBtn')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        alert('Полный прайс-лист можно запросить у администратора клиники.');
+    });
+</script>
+</body>
+</html>

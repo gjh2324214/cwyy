@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Тест</title></head>
+<body>
+    <h1>Тест API</h1>
+    <button onclick="test()">Нажми меня</button>
+    <pre id="out"></pre>
+    <script>
+        async function test() {
+            document.getElementById('out').innerText = 'Отправка...';
+            try {
+                const res = await fetch('/api/create-payment', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        amount: 100,
+                        description: 'Тест',
+                        orderId: 'test_' + Date.now()
+                    })
+                });
+                const data = await res.json();
+                document.getElementById('out').innerText = JSON.stringify(data, null, 2);
+                if (data.confirmationUrl) {
+                    document.getElementById('out').innerText += '\n\n✅ Успех! Переход через 3 секунды...';
+                    setTimeout(() => { location.href = data.confirmationUrl; }, 3000);
+                }
+            } catch(e) {
+                document.getElementById('out').innerText = 'Ошибка: ' + e.message;
+            }
+        }
+    </script>
+</body>
+</html>
